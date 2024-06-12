@@ -1,0 +1,15 @@
+asteroides.csv
+---------------------
+Esse conjunto de dados lista alguns asteróides que estão próximos da Terra, contendo algumas informações sobre o objeto e se ele é perigoso ou não (corre o risco de atingir a Terra).
+
+Atributos:
+
+ - velocidade_relativa_kms: velocidade relativa do objeto em km/s
+ - velocidade_relativa_kmh: velocidade relativa do objeto em km/h
+ - incerteza_da_orbita: mede quão rapidamente a posição do asteróide se torna desconhecida depois da última vez que foi visto (quanto maior, mais incerteza)
+ - inclinacao: ângulo de inclinação do asteróide em relação ao Sol
+ - periodo_da_orbita: quantidade de tempo que o objeto leva para completar sua órbita em torno do Sol
+ - distancia_perielio: mede a menor distância entre o objeto e o Sol
+ - anomalia_media: ângulo que mede uma fração de período dentro da órbita elíptica após a passagem pelo periapsis em relação ao Sol
+ - movimento_medio: mede a velocidade angular necessária para o corpo completar sua órbita
+ - perigo: indica se o asteróide oferece risco ou não (0 = não perigoso, 1 = perigoso)
