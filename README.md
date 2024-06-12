@@ -10,7 +10,7 @@ Ferramenta: scikit-learn - Machine Learning in Python
 
 2) Realizar a classificação do conjunto de dados empregando um outro modelo de livre escolha
 
-Sugestões:
+    Sugestões:
 - MLP (https://scikit-learn.org/stable/modules/neural_networks_supervised.html)
 (https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html#sklearn.neural_network.MLPClassifier).
 
