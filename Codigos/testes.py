@@ -7,6 +7,8 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
+from sklearn.naive_bayes import MultinomialNB
+
 def arvore_decicao(x_train, x_test, y_train, y_test):
     #cia a arvore de decicao
         #padrão
@@ -135,6 +137,22 @@ def svc(x_train, x_test, y_train, y_test):
     disp.plot()
     plt.show()
 
+def naive(x_train, x_test, y_train, y_test):
+    clf = MultinomialNB()
+    clf.fit(x_train, y_train)
+    #Faça previsões no conjunto de teste
+    y_pred = clf.predict(x_test)
+
+    #faz o relatório de métricas
+    target_names = ['não perigoso', 'perigoso']
+    print(classification_report(y_test, y_pred, target_names=target_names))
+    
+    #faz a matriz de confusão
+    cm = confusion_matrix(y_test, y_pred, labels=clf.classes_)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=['não perigoso', 'perigoso'])
+    disp.plot()
+    plt.show()
+
 def main():
     #lê os arquivos
     df = pd.read_csv('../Dados/asteroides.csv')
@@ -144,13 +162,14 @@ def main():
     y = df['perigo']
 
     #separa em grupo de teste, para ver a eficacia do classificação
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=42)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
     print("Tamanho do conjunto de treino:", x_train.shape)
     print("Tamanho do conjunto de teste:", x_test.shape)
     #MLP(x_train, x_test, y_train, y_test)
     #arvore_decicao(x_train, x_test, y_train, y_test)
     #knn(x_train, x_test, y_train, y_test)
     #svc(x_train, x_test, y_train, y_test)
+    naive(x_train, x_test, y_train, y_test)
     
 if __name__ == "__main__":
     main()
