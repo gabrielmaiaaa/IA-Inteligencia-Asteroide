@@ -9,57 +9,41 @@ from sklearn.svm import SVC
 from sklearn.naive_bayes import MultinomialNB
 
 def arvore_decicao(x_train, x_test, y_train, y_test):
-    #cia a arvore de decicao
+    #cria a arvore de decicao
+        
         #padrão
     # clf = tree.DecisionTreeClassifier()
     
         # colocando os valores maior acurracy
     clf = tree.DecisionTreeClassifier(
-        'criterion': 'entropy', 
-        'ccp_alpha': 0.0, 
-        'max_depth': None, 
-        'max_features': None, 
-        'max_leaf_nodes': None, 
-        'min_impurity_decrease': 0.0, 
-        'min_samples_leaf': 1, 
-        'min_samples_split': 2, 
-        'min_weight_fraction_leaf': 0.0, 
-        'splitter': 'best'
-        )
-        
-    
-    
-    clf = tree.DecisionTreeClassifier(
-        criterion='gini', 
-        splitter='best', 
-        max_depth=None, 
-        min_samples_split=2, 
-        min_samples_leaf=1, 
-        #min_weight_fraction_leaf=0.0, 
-        max_features='log2', 
-        #random_state=None, 
-        #max_leaf_nodes=None, 
-        #min_impurity_decrease=0.0, 
-        #class_weight=None, 
-        #ccp_alpha=0.0, 
-        #monotonic_cst=None
+        criterion= 'entropy', 
+        ccp_alpha= 0.0, 
+        max_depth= None, 
+        max_features= None, 
+        max_leaf_nodes= None, 
+        min_impurity_decrease= 0.0, 
+        min_samples_leaf= 1, 
+        min_samples_split= 2, 
+        min_weight_fraction_leaf= 0.0, 
+        splitter= 'best'
     )
-    
-    #     mexendo valores
+         
+         #colocando maior valor de perigo
     # clf = tree.DecisionTreeClassifier(
-    #     criterion='gini',      # Usa ganho de informação como critério
-    #     splitter='best',
-    #     max_depth=None,             # Define a profundidade máxima da árvore
-    #     min_samples_split=3 ,      # Define o número mínimo de amostras para dividir um nó
-    #     min_samples_leaf=1,       # Define o número mínimo de amostras em um nó folha
-    #     max_features=None,      # Considera a raiz quadrada do número total de recursos para cada divisão
-    #     #class_weight='balanced',    # Ajusta os pesos das classes automaticamente
-    #     random_state=42     # Controla a aleatoriedade para reproducibilidade
-               
+    #     ccp_alpha= 0.01,
+    #     criterion= 'entropy',
+    #     max_depth= None,
+    #     max_features= None,
+    #     max_leaf_nodes= None,
+    #     min_impurity_decrease= 0.0,
+    #     min_samples_leaf= 1,
+    #     min_samples_split= 2,
+    #     min_weight_fraction_leaf= 0.0,
+    #     splitter= 'best'
     # )
     
     #treina a arvore
-    clf.fit(x_train, y_train)
+    clf.fit(x_train,y_train)
     
     #faz o predict das amostras que a gente deixou como teste
     y_pred = clf.predict(x_test)
@@ -74,7 +58,7 @@ def arvore_decicao(x_train, x_test, y_train, y_test):
     disp.plot()
     plt.show()
 
-# def arvore_decicao(x_train, x_test, y_train, y_test, scoring='recall'):
+# def arvore_decicao(x_train, x_test, y_train, y_test, scoring='accuracy'):
 #     # Inicializar um DecisionTreeClassifier
 #     clf = tree.DecisionTreeClassifier(random_state=42, class_weight='balanced')
 
@@ -203,56 +187,56 @@ def svc(x_train, x_test, y_train, y_test):
     disp.plot()
     plt.show()
 
-# def naive(x_train, x_test, y_train, y_test):
+def naive(x_train, x_test, y_train, y_test):
 
-#     clf = MultinomialNB()
-#     clf.fit(x_train, y_train)
-#     #Faça previsões no conjunto de teste
-#     y_pred = clf.predict(x_test)
-
-#     #faz o relatório de métricas
-#     target_names = ['não perigoso', 'perigoso']
-#     print(classification_report(y_test, y_pred, target_names=target_names))
-    
-#     #faz a matriz de confusão
-#     cm = confusion_matrix(y_test, y_pred, labels=clf.classes_)
-#     disp = ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=['não perigoso', 'perigoso'])
-#     disp.plot()
-#     plt.show()
-
-def naive(x_train, x_test, y_train, y_test, scoring='recall'):
-    # Inicializar um MultinomialNB
     clf = MultinomialNB()
+    clf.fit(x_train, y_train)
+    #Faça previsões no conjunto de teste
+    y_pred = clf.predict(x_test)
 
-    # Definir o grid de parâmetros
-    param_grid = {
-        'alpha': [0.0, 0.1, 0.5, 1.0, 2.0, 5.0, 10.0],
-        'fit_prior': [True, False]
-    }
-
-    # Realizar busca em grade com validação cruzada
-    grid_search = GridSearchCV(estimator=clf, param_grid=param_grid, cv=5, scoring=scoring, n_jobs=-1, verbose=2)
-    grid_search.fit(x_train, y_train)
-
-    # Melhor combinação de hiperparâmetros
-    print("Melhores parâmetros encontrados: ", grid_search.best_params_)
-
-    # Treinar o modelo com os melhores parâmetros
-    best_clf = grid_search.best_estimator_
-    best_clf.fit(x_train, y_train)
-
-    # Fazer previsões no conjunto de teste
-    y_pred = best_clf.predict(x_test)
-
-    # Imprimir o relatório de classificação
+    #faz o relatório de métricas
     target_names = ['não perigoso', 'perigoso']
     print(classification_report(y_test, y_pred, target_names=target_names))
-
-    # Matriz de confusão
-    cm = confusion_matrix(y_test, y_pred, labels=best_clf.classes_)
-    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=target_names)
+    
+    #faz a matriz de confusão
+    cm = confusion_matrix(y_test, y_pred, labels=clf.classes_)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=['não perigoso', 'perigoso'])
     disp.plot()
     plt.show()
+
+# def naive(x_train, x_test, y_train, y_test, scoring='recall'):
+#     # Inicializar um MultinomialNB
+#     clf = MultinomialNB()
+
+#     # Definir o grid de parâmetros
+#     param_grid = {
+#         'alpha': [0.0, 0.1, 0.5, 1.0, 2.0, 5.0, 10.0],
+#         'fit_prior': [True, False]
+#     }
+
+#     # Realizar busca em grade com validação cruzada
+#     grid_search = GridSearchCV(estimator=clf, param_grid=param_grid, cv=5, scoring=scoring, n_jobs=-1, verbose=2)
+#     grid_search.fit(x_train, y_train)
+
+#     # Melhor combinação de hiperparâmetros
+#     print("Melhores parâmetros encontrados: ", grid_search.best_params_)
+
+#     # Treinar o modelo com os melhores parâmetros
+#     best_clf = grid_search.best_estimator_
+#     best_clf.fit(x_train, y_train)
+
+#     # Fazer previsões no conjunto de teste
+#     y_pred = best_clf.predict(x_test)
+
+#     # Imprimir o relatório de classificação
+#     target_names = ['não perigoso', 'perigoso']
+#     print(classification_report(y_test, y_pred, target_names=target_names))
+
+#     # Matriz de confusão
+#     cm = confusion_matrix(y_test, y_pred, labels=best_clf.classes_)
+#     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=target_names)
+#     disp.plot()
+#     plt.show()
 
 # Exemplo de uso (você precisa fornecer os dados de entrada apropriados)
 # naive(x_train, x_test, y_train, y_test)
@@ -266,14 +250,15 @@ def main():
     y = df['perigo']
 
     #separa em grupo de teste, para ver a eficacia do classificação
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=42)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
     print("Tamanho do conjunto de treino:", x_train.shape)
     print("Tamanho do conjunto de teste:", x_test.shape)
     #MLP(x_train, x_test, y_train, y_test)
-    arvore_decicao(x_train, x_test, y_train, y_test, scoring='recall')
+    arvore_decicao(x_train, x_test, y_train, y_test)
     #knn(x_train, x_test, y_train, y_test)
     #svc(x_train, x_test, y_train, y_test)
-    #naive(x_train, x_test, y_train, y_test)
+    
+    naive(x_train, x_test, y_train, y_test)
     
 if __name__ == "__main__":
     main()
